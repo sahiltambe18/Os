@@ -45,8 +45,8 @@ int main(){
 			exe.bt= 0;
 			for(int j = 0; j < n ; j++){
 				if(p[j].id==exe.id){
-					p[j].tat = count - p[j].at;
-					p[j].wt = p[j].tat - p[j].bt;
+					p[j].wt = count - p[j].at - p[j].bt;
+					p[j].tat = p[j].wt + p[j].bt;
 				}
 			}
 			cout<<"process "<<exe.id<<"ended at : "<<count<<endl;
@@ -121,13 +121,12 @@ process 2ended at : 11
 process 1ended at : 17
 process 4ended at : 19
 process 3ended at : 20
-pid	at	bt	wt	tat
-0	0	3	0	3
-1	2	6	9	15
-2	4	4	3	7
-3	6	5	9	14
-4	8	2	9	11
+pid     at      bt      wt      tat
+0       0       3       0       3
+1       2       6       9       15
+2       4       4       3       7
+3       6       5       9       14
+4       8       2       9       11
 average waiting time : 6
 average turn around time : 10
-
 */
