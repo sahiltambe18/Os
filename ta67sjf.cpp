@@ -67,8 +67,6 @@ int main()
         ep[0] = exe;
         if (exe.bt == 0)
         {
-            exe.wt = count - exe.bt - exe.at;
-            exe.tat = exe.wt - exe.bt;
             ep[0] = exe;
             for (int t = 0; t < n; t++)
             {
@@ -76,6 +74,8 @@ int main()
                     int temp = p[t].bt;  // temp to recover bt 
                     p[t] = exe;    // this line will assign bt = 0 as exe.bt = 0
                     p[t].bt = temp;
+                    p[t].wt = count - p[t].bt - p[t].at;
+                    p[t].tat = p[t].wt + p[t].bt;
                 }
             }
             
@@ -120,7 +120,6 @@ int main()
 
 
 /*
-PS C:\Users\Lenovo\Desktop\code\os> cd "c:\Users\Lenovo\Desktop\code\os\" ; if ($?) { g++ sjf.cpp -o sjf } ; if ($?) { .\sjf }
 enter number of processes
 5
 enter arrival time of procces 1
@@ -142,19 +141,19 @@ enter burst time of process 4
 enter arrival time of procces 5
 12
 enter burst time of process 5
-6 
+6
 process 2 ended at : 7
 process 1 ended at : 12
 process 4 ended at : 15
 process 3 ended at : 20
 process 5 ended at : 26
 pid     at      bt      wt      tat
-1       0       8       12      12
-2       3       4       4       4
-3       7       5       13      13
-4       10      3       5       5
-5       12      6       14      14
-average waiting time : 9.6
+1       0       8       4       12
+2       3       4       0       4
+3       7       5       8       13
+4       10      3       2       5
+5       12      6       8       14
+average waiting time : 4.4
 average turn around time : 9.6
 PS C:\Users\Lenovo\Desktop\code\os> 
 */
