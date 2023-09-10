@@ -49,7 +49,7 @@ int main(){
 					p[j].tat = p[j].wt + p[j].bt;
 				}
 			}
-			cout<<"process "<<exe.id<<"ended at : "<<count<<endl;
+			cout<<"process "<<exe.id<<" ended at : "<<count<<endl;
 		}
 		if(p[i+1].at <= count){
 			for(int x = i+1 ; x < n ; x++){
