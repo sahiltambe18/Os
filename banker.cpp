@@ -3,26 +3,47 @@
 
 using namespace std;
 
+void input(int arr[][3])
+{
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "enter for p" << i << " ";
+		for (int j = 0; j < 3; j++)
+		{
+			cin>>arr[i][j];
+		}
+	}
+}
+
 int main()
 {
-	int need[5][3];
-	int total[] = {10, 5, 7};
-	int available[3], new_available[3], p, req[3];
+	int need[5][3], p;
+	vector<int> total = {10, 5, 7};
+	vector<int> available(3, 0), req(3, 0);
 	vector<int> safe;
 	vector<int> final(5, 0);
-	bool safe_flag = true;
+	bool safe_flag = false;
 
-	int allocated[5][3] = {{0, 1, 0},
-						   {2, 0, 0},
-						   {3, 0, 2},
-						   {2, 1, 1},
-						   {0, 0, 2}};
+	int allocated[5][3] ;
+	// int allocated[5][3] = {{0, 1, 0},
+	// 					   {2, 0, 0},
+	// 					   {3, 0, 2},
+	// 					   {2, 1, 1},
+	// 					   {0, 0, 2}};
 
-	int max[5][3] = {{7, 5, 3},
+	cout << "Enter allocated resources : \n";
+	input(allocated);
+
+	int max[5][3] ;
+	cout << "Enter max resources needed for process : \n";
+	input(max);
+	/*
+	= {{7, 5, 3},
 					 {3, 2, 2},
 					 {9, 0, 2},
 					 {2, 2, 2},
 					 {4, 3, 3}};
+	*/
 
 	// need matrix
 	for (int i = 0; i < 5; i++)
@@ -34,9 +55,7 @@ int main()
 	}
 
 	// available matrix
-	available[0] = total[0];
-	available[1] = total[1];
-	available[2] = total[2];
+	available = total;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -46,7 +65,6 @@ int main()
 		}
 	}
 
-	cout << available[0] << " " << available[1] << " " << available[2] << endl;
 
 	cout << "process id\n";
 	cin >> p;
@@ -61,6 +79,7 @@ int main()
 	{
 		if (req[0] <= available[0] && req[1] <= available[1] && req[2] <= available[2])
 		{
+			safe_flag = true;
 			for (int j = 0; j < 3; j++)
 			{
 				available[j] -= req[j];
@@ -80,17 +99,17 @@ int main()
 						final[i] = 1;
 						safe.push_back(i);
 					}
-				}cout<<x<<endl;
+				}
 			}
 			for (auto flag : final)
 			{
 				if (flag == 0)
 				{
 					safe_flag = false;
-					cout << "not in safe sequence" << endl;
 					break;
 				}
 			}
+			
 		}
 	}
 
@@ -99,8 +118,10 @@ int main()
 		cout << "safe sequence is : ";
 		for (auto pr : safe)
 		{
-			cout << "p"<<pr << " ";
+			cout << "p" << pr << " ";
 		}
+	}else{
+		cout << "not in safe sequence" << endl;
 	}
 
 	return 0;
