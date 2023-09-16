@@ -10,7 +10,20 @@ void input(int arr[][3])
 		cout << "enter for p" << i << " ";
 		for (int j = 0; j < 3; j++)
 		{
-			cin>>arr[i][j];
+			cin >> arr[i][j];
+		}
+	}
+}
+
+void restore_available(vector<int> &available, vector<int> total, int allocated[][3])
+{
+	available = total;
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			available[j] -= allocated[i][j];
 		}
 	}
 }
@@ -24,7 +37,7 @@ int main()
 	vector<int> final(5, 0);
 	bool safe_flag = false;
 
-	int allocated[5][3] ;
+	int allocated[5][3];
 	// int allocated[5][3] = {{0, 1, 0},
 	// 					   {2, 0, 0},
 	// 					   {3, 0, 2},
@@ -34,7 +47,7 @@ int main()
 	cout << "Enter allocated resources : \n";
 	input(allocated);
 
-	int max[5][3] ;
+	int max[5][3];
 	cout << "Enter max resources needed for process : \n";
 	input(max);
 	/*
@@ -55,17 +68,8 @@ int main()
 	}
 
 	// available matrix
-	available = total;
-
-	for (int i = 0; i < 5; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			available[j] -= allocated[i][j];
-		}
-	}
-
-
+	restore_available(available, total, allocated);
+	
 	cout << "process id\n";
 	cin >> p;
 	// 1 0 2
@@ -106,10 +110,16 @@ int main()
 				if (flag == 0)
 				{
 					safe_flag = false;
+					for (int j = 0; j < 3; j++)
+					{
+						available[j] += req[j];
+						allocated[p][j] -= req[j];
+						need[p][j] += req[j];
+					}
+					restore_available(available, total, allocated);
 					break;
 				}
 			}
-			
 		}
 	}
 
@@ -120,9 +130,58 @@ int main()
 		{
 			cout << "p" << pr << " ";
 		}
-	}else{
+	}
+	else
+	{
 		cout << "not in safe sequence" << endl;
 	}
 
 	return 0;
 }
+
+
+
+/*
+Enter allocated resources : 
+enter for p0 0
+1
+0
+enter for p1 2
+0
+0
+enter for p2 3
+0
+2
+enter for p3 2
+1
+1
+enter for p4 0
+0
+2
+Enter max resources needed for process :
+enter for p0 7
+5
+3
+enter for p1 3
+2
+2
+enter for p2 9
+0
+2
+enter for p3 2
+2
+2
+enter for p4 4
+3
+3
+3 3 2 process id
+1
+enter resorces
+1
+enter resorces
+0
+enter resorces
+2
+safe sequence is : p1 p3 p4 p0 p2
+PS C:\Users\Lenovo\Desktop\code\os> 
+*/
