@@ -19,9 +19,13 @@ void* writerFunction(void* arg) {
 	//sleep(1);
 }
 
+void* writerFunc(){
+    sem_wait(&writer);
+        printf("writer\n")
+    sem_post(&writer);
+}
+
 void* readerFunction(void* arg) {
-	
-	
 	sem_wait(&reader);
 		readerCount++;
 		if(readerCount == 1)
@@ -37,6 +41,25 @@ void* readerFunction(void* arg) {
 	sem_post(&reader);
 	
 	//sleep(1);
+}
+void* readerFunc(){
+    sem_wait(&reader);
+    count++;
+    if (count==1)
+    {
+        sem_wait(&writer);
+    }
+    sem_post(&reader);
+    printf("reader\n");
+    sem_wait(&reader);
+      count--;
+      if (count==0)
+      {
+        sem_post(&writer);
+      }
+      
+    sem_post(&reader);
+
 }
 
 int main() {
